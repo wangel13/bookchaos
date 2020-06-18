@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  emailHash  String
+  password   String    @default("")
+  passwordSalt String  @default("")
+  role       Role      @default(USER)
+  name       String?
+  books      Book[]    @relation(name: "BookAuthor")
+  chapters   Chapter[] @relation(references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Book {
+  id         String   @id @default(cuid())
+  title      String
+  author     User?    @relation(name: "BookAuthor", fields: [authorId], references: [id])
+  authorId   String?
+  published  Boolean  @default(false)
+  coAuthors  User[]
+  chapters   Chapter[]
+  tags       Tag[]    @relation(references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Chapter {
+  id            String   @id @default(cuid())
+  title         String
+  author        User?    @relation(name: "ChapterAuthor", fields: [authorId], references: [id])
+  authorId      String?
+  published     Boolean  @default(false)
+  coAuthors     User[]   @relation(references: [id])
+  content       Json
+  book          Book?    @relation(fields: [bookId], references: [id])
+  bookId        String?
+  chapterLinksFrom  ChapterLink[] @relation(name: "ChapterLinkFrom")
+  chapterLinksTo  ChapterLink[] @relation(name: "ChapterLinkTo")
+  tags          Tag[]    @relation(references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ChapterLink {
+  id          String   @id @default(cuid())
+  title       String
+  fromChapter Chapter? @relation(name: "ChapterLinkFrom", fields: [fromId], references: [id])
+  fromId      String?
+  toChapter   Chapter? @relation(name: "ChapterLinkTo", fields: [toId], references: [id])
+  toId        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tag {
+  id         String    @id @default(cuid())
+  title      String    @unique
+  createdAt  DateTime  @default(now())
+  books      Book[]    @relation(references: [id])
+  chapters   Chapter[] @relation(references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}

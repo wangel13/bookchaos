@@ -1,0 +1,75 @@
+{
+  "name": "bookchaos",
+  "version": "1.0.0",
+  "description": "Book writing app",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "studio": "npx prisma studio --experimental",
+    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "ts-node --transpile-only -P nexus.tsconfig.json src/graphql/schema",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+  },
+  "keywords": [],
+  "author": "Taras Protchenko <tapacpro@gmail.com>",
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "@apollo/react-hooks": "3.1.5",
+    "@apollo/react-ssr": "3.1.5",
+    "@hapi/iron": "^6.0.0",
+    "@material-ui/core": "^4.10.1",
+    "@material-ui/icons": "^4.9.1",
+    "@nexus/schema": "0.13.1",
+    "@prisma/client": "2.0.0",
+    "apollo-boost": "0.4.9",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-http": "1.5.17",
+    "apollo-link-schema": "1.2.5",
+    "apollo-server-micro": "^2.14.1",
+    "clsx": "^1.1.1",
+    "cookie": "^0.4.1",
+    "formik": "^2.1.4",
+    "graphql": "^15.0.0",
+    "graphql-iso-date": "3.6.1",
+    "graphql-tag": "2.10.3",
+    "md5": "^2.2.1",
+    "next": "9.4.4",
+    "nexus-prisma": "^0.12.0",
+    "notistack": "^0.9.16",
+    "react": "16.13.1",
+    "react-apollo": "3.1.5",
+    "react-dom": "16.13.1",
+    "yup": "^0.29.1"
+  },
+  "devDependencies": {
+    "@prisma/cli": "^2.0.0",
+    "@types/graphql": "14.5.0",
+    "@types/node": "13.13.9",
+    "@types/react": "16.9.35",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/parser": "^3.1.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.7",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.2",
+    "typescript": "3.9.3"
+  }
+}
