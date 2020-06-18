@@ -16,7 +16,13 @@ export const GQLDate = asNexusMethod(GraphQLDate, 'date')
 
 export const schema = makeSchema({
   types: [Query, Mutation, SignOut, Book, User, Chapter, ChapterLink, Tag, GQLDate],
-  plugins: [nexusPrismaPlugin()],
+  plugins: [
+    nexusPrismaPlugin({
+      outputs: {
+        typegen: path.join(process.cwd(), 'src/graphql/schema/nexus-prisma-typegen.ts'),
+      },
+    }),
+  ],
   outputs: {
     typegen: path.join(process.cwd(), 'src/graphql/schema/nexus-typegen.ts'),
     schema: path.join(process.cwd(), 'src/graphql/schema/schema.graphql'),
