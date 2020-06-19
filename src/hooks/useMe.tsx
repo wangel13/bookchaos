@@ -12,7 +12,7 @@ const MeQuery = gql`
   }
 `
 
-const withMe = () => {
+const useMe = () => {
   const router = useRouter()
   const { data, loading, error } = useQuery(MeQuery)
   const me = data?.me
@@ -24,6 +24,7 @@ const withMe = () => {
       router.push('/signin')
     }
   }, [shouldRedirect])
+
   return {
     me,
     loading,
@@ -31,4 +32,4 @@ const withMe = () => {
   }
 }
 
-export default withMe
+export default useMe

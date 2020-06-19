@@ -1,11 +1,13 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import withMe from 'hooks/withMe'
+import useMe from 'hooks/useMe'
+import Box from '@material-ui/core/Box'
+import Head from 'next/head'
 
-import Link from 'components/Link'
+import DashboardLayout from 'layouts/DashboardLayout'
 
 const Index = () => {
-  const { me, error } = withMe()
+  const { me, error } = useMe()
 
   if (error) {
     return <Typography variant="h1">{error.message}</Typography>
@@ -13,10 +15,16 @@ const Index = () => {
 
   if (me) {
     return (
-      <div>
-        <Link href="/signout">SignOut</Link>
-        <Typography variant="h1">{me?.email} It's works! BooooooooooOOooookChaooooOooooos!</Typography>
-      </div>
+      <>
+        <Head>
+          <title>BookChaos - write a book app</title>
+        </Head>
+        <DashboardLayout>
+          <Box p={2}>
+            <Typography variant="h5">{me?.email} - It&apos;s works!</Typography>
+          </Box>
+        </DashboardLayout>
+      </>
     )
   }
 

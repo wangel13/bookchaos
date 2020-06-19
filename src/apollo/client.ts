@@ -4,11 +4,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 let apolloClient
 
-function createIsomorphLink(ctx) {
+function createIsomorphLink() {
   if (typeof window === 'undefined') {
     const { SchemaLink } = require('apollo-link-schema')
     const { schema } = require('../graphql/schema')
-    return new SchemaLink({ schema, context: ctx })
+    return new SchemaLink({ schema })
   } else {
     const { HttpLink } = require('apollo-link-http')
     return new HttpLink({

@@ -1,14 +1,30 @@
+import React from 'react'
 import { createMuiTheme } from '@material-ui/core/styles'
 import deepPurple from '@material-ui/core/colors/deepPurple'
 import lightBlue from '@material-ui/core/colors/lightBlue'
 
+declare module '@material-ui/core/styles/createMuiTheme' {
+  interface Theme {
+    customColors: {
+      grey: React.CSSProperties['color']
+      lightGrey: React.CSSProperties['color']
+    }
+  }
+  interface ThemeOptions {
+    customColors: {
+      grey: React.CSSProperties['color']
+      lightGrey: React.CSSProperties['color']
+    }
+  }
+}
 const theme = createMuiTheme({
+  customColors: {
+    grey: '#edf0f2',
+    lightGrey: '#f8f9fa',
+  },
   palette: {
     background: {
       default: '#ffffff',
-      // @ts-ignore
-      grey: '#edf0f2',
-      lightGrey: '#f8f9fa',
     },
     primary: {
       light: deepPurple[300],

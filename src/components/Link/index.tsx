@@ -50,6 +50,6 @@ Link.propTypes = {
   prefetch: PropTypes.bool,
 }
 
-export default React.forwardRef<HTMLAnchorElement, InternalLinkProps>((props, ref) => (
-  <Link {...props} innerRef={ref} />
-))
+export default React.forwardRef<HTMLAnchorElement, InternalLinkProps>(function CustomLink(props, ref) {
+  return <Link {...props} innerRef={ref} />
+})
