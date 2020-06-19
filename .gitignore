@@ -1,4 +1,8 @@
 node_modules/
-src/generated/
+src/graphql/schema/nexus-prisma-typegen.ts
+src/graphql/schema/nexus-typegen.ts
+src/graphql/schema/schema.graphql
 .next/
 .env*.local
+
+.vercel
