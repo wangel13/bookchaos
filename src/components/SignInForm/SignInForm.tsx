@@ -77,10 +77,7 @@ export const SignForm = ({ isSubmitting, isValid }) => {
 }
 
 export const SignInForm = ({ onSubmit }) => (
-  <Formik
-    initialValues={{ email: '', password: '' }}
-    validationSchema={SignInSchema}
-    render={(props) => <SignForm {...props} />}
-    onSubmit={onSubmit}
-  />
+  <Formik initialValues={{ email: '', password: '' }} validationSchema={SignInSchema} onSubmit={onSubmit}>
+    {(props) => <SignForm {...props} />}
+  </Formik>
 )

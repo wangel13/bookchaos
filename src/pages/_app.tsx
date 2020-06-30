@@ -7,6 +7,10 @@ import theme from 'components/Theme'
 import { SnackbarProvider } from 'notistack'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { useApollo } from 'apollo/client'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import dayjs from 'dayjs'
+
+dayjs.extend(localizedFormat)
 
 export default function MyApp(props) {
   const { Component, pageProps } = props

@@ -15,7 +15,7 @@ export const Query = objectType({
           const session = await getLoginSession(ctx.req)
 
           if (session) {
-            return ctx.prisma.user.findOne({
+            return await ctx.prisma.user.findOne({
               where: {
                 email: session.email,
               },

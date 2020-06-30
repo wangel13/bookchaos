@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
@@ -9,6 +8,8 @@ import FullLogo from 'components/Logo/FullLogo'
 import gql from 'graphql-tag'
 import { useApolloClient, useMutation } from '@apollo/react-hooks'
 import { useRouter } from 'next/router'
+import { NextPage } from 'next'
+import CenteredLayout from 'layouts/CenteredLayout'
 
 const SignOutMutation = gql`
   mutation SignOut {
@@ -19,10 +20,6 @@ const SignOutMutation = gql`
 `
 
 const useStyles = makeStyles((theme) => ({
-  signInGrid: {
-    height: '100vh',
-    backgroundImage: `linear-gradient(15deg, ${theme.palette.primary.main} 50%, #8c73ce 100%)`,
-  },
   signIn: {
     ...theme.mixins.gutters(),
     maxWidth: 400,
@@ -31,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SignOut = () => {
+const SignOut: NextPage = () => {
   const classes = useStyles()
   const client = useApolloClient()
   const router = useRouter()
@@ -46,18 +43,16 @@ const SignOut = () => {
   }, [signOut, router, client])
 
   return (
-    <Grid className={classes.signInGrid} container direction="row" justify="center" alignItems="center">
-      <Grid item>
-        <Box pb={4}>
-          <FullLogo />
+    <CenteredLayout>
+      <Box pb={4}>
+        <FullLogo mini />
+      </Box>
+      <Paper className={classes.signIn} elevation={1}>
+        <Box pt={1}>
+          <Typography variant="overline">Signing out...</Typography>
         </Box>
-        <Paper className={classes.signIn} elevation={1}>
-          <Box pt={1}>
-            <Typography variant="overline">Signing out..</Typography>
-          </Box>
-        </Paper>
-      </Grid>
-    </Grid>
+      </Paper>
+    </CenteredLayout>
   )
 }
 

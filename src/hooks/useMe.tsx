@@ -16,7 +16,6 @@ const useMe = () => {
   const router = useRouter()
   const { data, loading, error } = useQuery(MeQuery)
   const me = data?.me
-  console.log(me)
   const shouldRedirect = !(loading || error || me)
 
   useEffect(() => {

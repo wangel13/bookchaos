@@ -7,8 +7,7 @@ import { removeTokenCookie } from '../../../lib/authCookies'
 export const Mutation = objectType({
   name: 'Mutation',
   definition(t) {
-    t.crud.createOneBook()
-
+    t.crud.deleteOneBook()
     t.field('signUp', {
       type: 'User',
       args: {

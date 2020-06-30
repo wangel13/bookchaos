@@ -2,6 +2,7 @@ node_modules/
 src/graphql/schema/nexus-prisma-typegen.ts
 src/graphql/schema/nexus-typegen.ts
 src/graphql/schema/schema.graphql
+prisma/.env
 .next/
 .env*.local
 

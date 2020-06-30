@@ -117,9 +117,10 @@ export const SignInForm = ({ onSubmit }) => (
     validateOnBlur={false}
     initialValues={{ name: '', email: '', password: '', passwordCheck: '' }}
     validationSchema={SignInSchema}
-    render={(props) => <SignForm {...props} />}
     onSubmit={onSubmit}
-  />
+  >
+    {(props) => <SignForm {...props} />}
+  </Formik>
 )
 
 export default SignInForm
