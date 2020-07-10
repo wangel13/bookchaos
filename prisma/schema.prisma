@@ -40,22 +40,23 @@ model Chapter {
   content       Json
   book          Book?    @relation(fields: [bookId], references: [id])
   bookId        String?
-  chapterLinksFrom  ChapterLink[] @relation(name: "ChapterLinkFrom")
-  chapterLinksTo  ChapterLink[] @relation(name: "ChapterLinkTo")
+  fromChapters  ChapterLink[] @relation(name: "ChapterToChapterLink_fromChapter")
+  toChapters    ChapterLink[] @relation(name: "ChapterToChapterLink_toChapter")
   tags          Tag[]    @relation(references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
 
 model ChapterLink {
-  id          String   @id @default(cuid())
   title       String
-  fromChapter Chapter? @relation(name: "ChapterLinkFrom", fields: [fromId], references: [id])
-  fromId      String?
-  toChapter   Chapter? @relation(name: "ChapterLinkTo", fields: [toId], references: [id])
-  toId        String?
+  fromId      String
+  toId        String
+  fromChapter Chapter @relation(name: "ChapterToChapterLink_fromChapter", fields: [fromId], references: [id])
+  toChapter   Chapter @relation(name: "ChapterToChapterLink_toChapter", fields: [toId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@id([toId, fromId])
 }
 
 model Tag {

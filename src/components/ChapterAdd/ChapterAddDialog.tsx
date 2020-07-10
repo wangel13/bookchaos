@@ -7,13 +7,14 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import * as Yup from 'yup'
 import { Field, Form, Formik } from 'formik'
-import { useSnackbar, withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 import { useMutation } from '@apollo/react-hooks'
+import { getBook } from 'apollo/queries/book'
 
-import FormikAdapter from '../FormikAdapter'
-import gql from 'graphql-tag'
+import FormikAdapter from 'components/FormikAdapter'
+import { createOneChapter } from 'apollo/queries/chapter'
 
-const AddBookSchema = Yup.object().shape({
+const AddChapterSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
 })
 
@@ -25,13 +26,13 @@ type FormComponent = {
 
 const FormComponent: React.FC<FormComponent> = ({ handleClose, isSubmitting, isValid }) => (
   <Form>
-    <DialogTitle id="add-book-form-dialog-title">Write new book</DialogTitle>
+    <DialogTitle id="add-chapter-form-dialog-title">Add new chapter</DialogTitle>
     <DialogContent>
-      <DialogContentText>To start writing a new book just type title below</DialogContentText>
+      <DialogContentText>To start writing a new chapter just type title below</DialogContentText>
       <Field
         name="title"
         InputComponent={TextField}
-        label="Book title"
+        label="Chapter title"
         autoFocus
         margin="dense"
         fullWidth
@@ -50,29 +51,19 @@ const FormComponent: React.FC<FormComponent> = ({ handleClose, isSubmitting, isV
   </Form>
 )
 
-const addBookMutation = gql`
-  mutation addBook($title: String!) {
-    createOneBook(title: $title) {
-      id
-      title
-      published
-    }
-  }
-`
-
-type BookAddDialog = {
+type ChapterAddDialog = {
   handleClose: () => any
+  bookId: string | string[]
 }
 
-const BookAddDialog: React.FC<BookAddDialog> = ({ handleClose }) => {
+const ChapterAddDialog: React.FC<ChapterAddDialog> = ({ handleClose, bookId }) => {
   const { enqueueSnackbar } = useSnackbar()
 
-  const [addBook, { data, error, loading }] = useMutation(addBookMutation, {
-    // TODO: add optimistic UI
-    refetchQueries: ['myBooks'],
-    onCompleted: ({ createOneBook: { title } }) => {
+  const [addChapter, { loading, data, error }] = useMutation(createOneChapter, {
+    refetchQueries: [{ query: getBook, variables: { id: bookId } }],
+    onCompleted: ({ createOneChapter: { title } }) => {
       handleClose()
-      enqueueSnackbar(`Success yor book - ${title} is ready!`, {
+      enqueueSnackbar(`Success yor chapter - ${title} is ready!`, {
         variant: 'success',
         anchorOrigin: {
           vertical: 'bottom',
@@ -95,11 +86,12 @@ const BookAddDialog: React.FC<BookAddDialog> = ({ handleClose }) => {
   return (
     <Formik
       initialValues={{ title: '' }}
-      validationSchema={AddBookSchema}
+      validationSchema={AddChapterSchema}
       onSubmit={(values, { setSubmitting }) => {
-        addBook({
+        addChapter({
           variables: {
             ...values,
+            bookId,
           },
         }).then(() => {
           setSubmitting(false)
@@ -111,4 +103,4 @@ const BookAddDialog: React.FC<BookAddDialog> = ({ handleClose }) => {
   )
 }
 
-export default BookAddDialog
+export default ChapterAddDialog

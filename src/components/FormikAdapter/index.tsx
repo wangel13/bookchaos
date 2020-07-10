@@ -16,7 +16,6 @@ const FormikAdapter = ({
   return (
     <InputComponent
       id={name}
-      name={name}
       helperText={showError ? fieldError : helperText}
       error={showError}
       disabled={disabled !== undefined ? disabled : isSubmitting}

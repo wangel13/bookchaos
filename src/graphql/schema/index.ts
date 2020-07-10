@@ -1,7 +1,9 @@
 import { makeSchema, asNexusMethod } from '@nexus/schema'
-import { nexusPrismaPlugin } from 'nexus-prisma'
+import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema'
 import { GraphQLDate } from 'graphql-iso-date'
 import path from 'path'
+import { applyMiddleware } from 'graphql-middleware'
+import { permissions } from '../permissions'
 
 import * as User from './types/User'
 import * as Book from './types/Book'
@@ -14,10 +16,11 @@ import * as SignOut from './types/SignOut'
 
 export const GQLDate = asNexusMethod(GraphQLDate, 'date')
 
-export const schema = makeSchema({
+export const baseSchema = makeSchema({
   types: [Query, Mutation, SignOut, Book, User, Chapter, ChapterLink, Tag, GQLDate],
   plugins: [
-    nexusPrismaPlugin({
+    nexusSchemaPrisma({
+      experimentalCRUD: true,
       outputs: {
         typegen: path.join(process.cwd(), 'src/graphql/schema/nexus-prisma-typegen.ts'),
       },
@@ -41,3 +44,5 @@ export const schema = makeSchema({
     ],
   },
 })
+
+export const schema = applyMiddleware(baseSchema, permissions)

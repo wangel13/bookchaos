@@ -3,11 +3,12 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
 import Link from 'components/Link'
+import { NextPage } from 'next'
 
 import DashboardLayout from 'layouts/DashboardLayout'
 import AuthWrapper from 'components/AuthWrapper'
 
-const Index = () => {
+const Index: NextPage = () => {
   return (
     <AuthWrapper>
       <Head>

@@ -16,6 +16,13 @@ export const Book = objectType({
   },
 })
 
+export const BooksQueries = extendType({
+  type: 'Query',
+  definition: (t) => {
+    t.crud.book()
+  },
+})
+
 export const BooksMutations = extendType({
   type: 'Mutation',
   definition: (t) => {

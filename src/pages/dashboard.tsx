@@ -35,7 +35,6 @@ export const myBooks = gql`
 
 const Dashboard: NextPage = () => {
   const { data, loading, error } = useQuery(myBooks)
-  console.log(data)
 
   if (error) {
     return <ErrorAlert error={error} />

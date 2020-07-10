@@ -5,7 +5,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import BookCard from './BookCard'
 import BookAdd from 'components/BookAdd'
-import { Book, BookGetPayload } from '@prisma/client'
+import { BookGetPayload } from '@prisma/client'
 
 const useStyles = makeStyles(() => ({
   skeleton: {

@@ -10,6 +10,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import Link from 'components/Link'
 import MiniLogo from 'components/Logo/MiniLogo'
 import Extension from './Extensions'
+import { SvgIconTypeMap } from '@material-ui/core'
+import { OverridableComponent } from '@material-ui/core/OverridableComponent'
 
 const drawerWidth = 240
 
@@ -57,20 +59,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-type layoutExtensionConfig = {
+type LayoutExtensionConfig = {
   name: string
-  apps: [
-    {
-      name: string
-      icon: React.FC
-      component: React.FC
-    },
-  ]
+  apps: {
+    title: string
+    name: string
+    icon: OverridableComponent<SvgIconTypeMap>
+    component: React.FC
+  }[]
 }
 
 type DashboardLayout = {
   layoutExtensionComponent?: React.FC
-  layoutExtensionConfig?: layoutExtensionConfig
+  layoutExtensionConfig?: LayoutExtensionConfig
   queryParams?: Record<string, unknown>
   bgPaper?: boolean
 }
